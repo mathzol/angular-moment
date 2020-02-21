@@ -331,7 +331,11 @@
 						cancelTimer();
 					});
 
-					scope.$on('amMoment:localeChanged', function () {
+					scope.$on('amMoment:localeChanged', function (evt, locale) {
+						if(currentValue){
+							currentValue.locale(locale);
+						}
+						
 						updateMoment();
 					});
 				};
@@ -360,7 +364,7 @@
 				this.changeLocale = function (locale, customization) {
 					var result = moment.locale(locale, customization);
 					if (angular.isDefined(locale)) {
-						$rootScope.$broadcast('amMoment:localeChanged');
+						$rootScope.$broadcast('amMoment:localeChanged', result);
 
 					}
 					return result;
